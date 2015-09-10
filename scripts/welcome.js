@@ -9,7 +9,7 @@ var scheduler = require('node-schedule')
 
 module.exports = function(robot){
   var WELCOME_ROOMS = ['hackers']
-  var WELCOME_MESSAGES = ['What are you working on?', 'Tell us about yourself!', 'Anything we can help you with?']
+  var WELCOME_MESSAGES = ['Working on anything interesting?', 'Tell us about yourself!', 'Anything we can help you with?']
 
   /** check the welcome queue every 2 minutes */
   var welcomeSchedule = scheduler.scheduleJob('*/2 * * * *', function() {
