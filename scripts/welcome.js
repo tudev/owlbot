@@ -8,7 +8,7 @@ var _ = require('underscore')
 var scheduler = require('node-schedule')
 
 module.exports = function(robot){
-  var WELCOME_ROOMS = ['hackers']
+  var WELCOME_ROOMS = ['general']
   var WELCOME_MESSAGES = ['Working on anything interesting?', 'Tell us about yourself!', 'Anything we can help you with?']
 
   /** check the welcome queue every 2 minutes */
@@ -36,7 +36,7 @@ module.exports = function(robot){
       /** clear out the queue */
       updateBrain([])
 
-      robot.messageRoom('#hackers', message)
+      robot.messageRoom('#general', message)
     }
   }
 
