@@ -18,7 +18,7 @@ module.exports = function(robot){
 
   /** Build the slack-specific string for @ replying users. */
   function buildUser(user){
-    return '<@' + user.id + '|' + user.name + '>'
+    return '<@' + user.id + '>'
   }
 
   /** return array of user strings to welcome */
