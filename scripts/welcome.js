@@ -13,7 +13,7 @@ module.exports = function(robot){
 
   /** check the welcome queue every 5 minutes */
   var rule =  new scheduler.RecurrenceRule()
-  rule.minute = new schedule.Range(0, 59, 5)
+  rule.minute = new scheduler.Range(0, 59, 5)
   var welcomeSchedule = scheduler.scheduleJob(rule, function() {
       welcomeUsers()
   })
