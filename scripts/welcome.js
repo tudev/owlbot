@@ -11,10 +11,12 @@ module.exports = function(robot){
   var WELCOME_ROOMS = ['general']
   var WELCOME_MESSAGES = ['Working on anything interesting?', 'Tell us about yourself!', 'Anything we can help you with?']
 
-  /** check the welcome queue every 2 minutes */
-  var welcomeSchedule = scheduler.scheduleJob('*/10 * * * *', function() {
+  /** check the welcome queue every 5 minutes */
+  var rule =  new scheduler.RecurrenceRule()
+  rule.minute = new schedule.Range(0, 59, 5)
+  var welcomeSchedule = scheduler.scheduleJob(rule, function() {
       welcomeUsers()
-  });
+  })
 
   /** Build the slack-specific string for @ replying users. */
   function buildUser(user){
@@ -51,8 +53,7 @@ module.exports = function(robot){
     //ensure only unique users get added
     if(_.isUndefined(_.find(queue, {id: user.id}))){
       queue.push({
-        id: user.id,
-        name: user.name
+        id: user.id
       })
       updateBrain(queue)
     }
