@@ -33,7 +33,7 @@ module.exports = function(robot){
   function welcomeUsers(){
     var users = getUsers().join(', ')
     if (!_.isEmpty(users)){
-      var message = 'Welcome ' + users + '! ' + WELCOME_MESSAGES[nextWelcomeMessageIndex()]
+      var message = 'Welcome ' + users + '! ' + _.sample(WELCOME_MESSAGES)
 
       /** clear out the queue */
       updateBrain([])
@@ -57,13 +57,6 @@ module.exports = function(robot){
       })
       updateBrain(queue)
     }
-  }
-
-  /**  Get and increment the welcome message index. */
-  function nextWelcomeMessageIndex(){
-    lastMessageIndex = robot.brain.get("last_welcome_index") || 0;
-    robot.brain.set("last_welcome_index", lastMessageIndex + 1);
-    return lastMessageIndex;
   }
 
   /** set the welcome_queue */
