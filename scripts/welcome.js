@@ -10,7 +10,6 @@ var scheduler = require('node-schedule')
 module.exports = function(robot){
   var WELCOME_ROOMS = ['general']
   var WELCOME_MESSAGES = ['Working on anything interesting?', 'Tell us about yourself!', 'Anything we can help you with?']
-  var lastMessageIndex = 0;
 
   /** check the welcome queue every 5 minutes */
   var rule =  new scheduler.RecurrenceRule()
@@ -34,7 +33,7 @@ module.exports = function(robot){
   function welcomeUsers(){
     var users = getUsers().join(', ')
     if (!_.isEmpty(users)){
-      var message = 'Welcome ' + users + '! ' + WELCOME_MESSAGES[lastMessageIndex++ %WELCOME_MESSAGES.length]
+      var message = 'Welcome ' + users + '! ' + _.sample(WELCOME_MESSAGES)
 
       /** clear out the queue */
       updateBrain([])
