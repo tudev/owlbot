@@ -15,14 +15,12 @@ module.exports = function (robot) {
      * 
      * */
     robot.respond('/(.*)\\+\\+/', function (msg) {
-        msg.send("++'ing " + msg.match[1] + " from: " + msg.message.user.name);
-
         var target = msg.match[1];
         var user = msg.message.user.name;
         var t;
         if( clearedTimeout( user ) ){
-            t = robot.brain.get("pp_"+target) || 0;
-            robot.brain.set("pp_"+target, t+1);
+            t = robot.brain.get(plusplus.words.target) || 0;
+            robot.brain.set(plusplus.words.target, t+1);
             setTimeout( user );
         }
     });
@@ -32,14 +30,12 @@ module.exports = function (robot) {
      * 
      * */
     robot.respond('/(.*)\\\-\\\-/', function (msg) {
-        msg.send("--'ing " + msg.match[1] + " from: " + msg.message.user.name);
-        
         var target = msg.match[1];
         var user = msg.message.user.name;
         var t;
         if( clearedTimeout( user ) ){
-            t = robot.brain.get("pp_"+target) || 0;
-            robot.brain.set("pp_"+target, t-1);
+            t = robot.brain.get(plusplus.words.target) || 0;
+            robot.brain.set(plusplus.words.target, t-1);
             setTimeout( user );
         }
     });
@@ -49,25 +45,19 @@ module.exports = function (robot) {
      * 
      * */
     robot.respond('/points (.*)/', function (msg) {
-        msg.send("points for " + msg.match[1] + " from: " + msg.message.user.name);
-        
         var target = msg.match[1];
-        var p = robot.brain.get("pp_"+target) || 0;
-        
+        var p = robot.brain.get(plusplus.words.target) || 0;
         msg.send("points for "+target+": "+p);
-        
     });
 
     function clearedTimeout(user_name) {
         var TIMEOUT = 5000;
-        var usertime = robot.brain.get("ppto_"+user_name) || 0;
+        var usertime = robot.brain.get(plusplus.users.user_name) || 0;
         return (Date.now() - usertime) > TIMEOUT;
     }
     
-
     function setTimeout(user_name) {
-        var fieldname = "ppto_"+user_name;
-        robot.brain.set( fieldname, Date.now() );
+        robot.brain.set( plusplus.users.user_name, Date.now() );
     }
 };
 
