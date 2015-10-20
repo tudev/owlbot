@@ -13,8 +13,10 @@
     "hubot-redis-brain": "0.0.3",
     "hubot-scripts": "^2.16.2",
     "hubot-slack": "^3.3.0",
+    "moment": "^2.10.6",
     "node-schedule": "^0.2.9",
     "querystring": "^0.2.0",
+    "shortid": "^2.2.4",
     "underscore": "^1.8.3"
   },
   "engines": {
