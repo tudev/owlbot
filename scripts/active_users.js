@@ -58,10 +58,10 @@ module.exports = function(robot){
   });
 
   robot.respond(/active count/i, function(msg){
-    msg.send("Since I started paying attention ("+ moment(START_DATE).format('ll') +"), I've seen " + getActiveUsers().length + " active users.");
+    msg.send("Since I started paying attention ("+ moment(START_DATE).format('ll') +"), I've seen " + getActiveUsers().length + " unique users.");
   });
 
-  robot.respond(/most active/i, function(msg){
+  robot.respond(/active top/i, function(msg){
     var top = getTop(10);
     var names = _.map(top, function(user, index){
       return (index+1 + ". " + user.name + ", " + user.total_messages);
