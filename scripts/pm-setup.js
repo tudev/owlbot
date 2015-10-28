@@ -25,18 +25,6 @@ module.exports = function(robot){
     	return userString;
 	}
 
-	function getUsersId(){
-		var userString = [];
-		var topActive = _.sortBy(getActiveUsers(), function(user){
-    		console.log(user.id);
-    		userString.push(user.id);
-    		return user;
-    	});
-    	console.log(topActive);
-    	console.log(userString);
-    	
-    	return userString;
-	}
 
 	robot.respond(/message active/i, function(msg){
 		msg.send("i have to message " + getUsers());
