@@ -27,14 +27,26 @@ module.exports = function(robot){
 
 
 	robot.respond(/message active/i, function(msg){
-		msg.send("i have to message " + getUsers());
 		_.each(getUsers(), function(user){
 			var userInfo = user.split(' ');
 			console.log("messaging "+userInfo[0]);
-			robot.send({
-			  room: userInfo[0]
-			}, "Hello! Can you take a survey for us? https://docs.google.com/a/temple.edu/forms/d/1c6SUzjE4VUpiVNQMDtrm1-opT7EzZCxh90wdGZxhVEQ/alreadyresponded?entry.2032465319=" + userInfo[1]);
+			console.log(msg.message.room);
+			
+			if((msg.message.room === 'raman')  ){
+				msg.send("i have to message " + getUsers());
+				robot.send({
+				  	room: userInfo[0]
+					}, "Hello! Can you take a survey for us? https://docs.google.com/a/temple.edu/forms/d/1c6SUzjE4VUpiVNQMDtrm1-opT7EzZCxh90wdGZxhVEQ/alreadyresponded?entry.2032465319=" + userInfo[1]);
+			} else {
+				robot.send({
+				  	room: msg.message.room
+					}, "Sorry, you are not allowed too message all active users" );
+				console.log('nope!');
+				throw ExceptionError;//short out of foreach
+			}	
 		});
+
+
 		/*robot.send({
 		  room: message.envelope.user.name
 		}, message);*/
