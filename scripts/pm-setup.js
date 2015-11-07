@@ -8,6 +8,8 @@ var _ = require('underscore');
 
 module.exports = function(robot){
 
+	var WATCH_ROOMS = ['couch', 'raman'];
+
 	function getActiveUsers() {
     	return robot.brain.get("active_users") || [];
   	}
@@ -30,10 +32,10 @@ module.exports = function(robot){
 		_.each(getUsers(), function(user){
 			var userInfo = user.split(' ');
 			console.log("messaging "+userInfo[0]);
-			console.log(msg.message.room);
 			
-			if((msg.message.room === 'raman')  ){
-				msg.send("i have to message " + getUsers());
+			
+			if( WATCH_ROOMS.indexOf(msg.message.room) != -1 ){
+				msg.send("i have to message " + userInfo[0]);
 				robot.send({
 				  	room: userInfo[0]
 					}, "Hello! Can you take a survey for us? https://docs.google.com/a/temple.edu/forms/d/1c6SUzjE4VUpiVNQMDtrm1-opT7EzZCxh90wdGZxhVEQ/alreadyresponded?entry.2032465319=" + userInfo[1]);
@@ -45,10 +47,5 @@ module.exports = function(robot){
 				throw ExceptionError;//short out of foreach
 			}	
 		});
-
-
-		/*robot.send({
-		  room: message.envelope.user.name
-		}, message);*/
 	});
 }
