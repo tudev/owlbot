@@ -93,6 +93,42 @@ module.exports = function(robot){
         return _.first(mentors, n);
     }
 
+    function getRustMentors(n){
+        var mentors = _.sortBy(_.filter(getMentors(), function(mentor){
+            return mentor.rust > 0;
+        }), function(m){
+            return m.rust;
+        });
+
+        mentors.reverse();
+
+        return _.first(mentors, n);
+    }
+
+    function getAndroidMentors(n){
+        var mentors = _.sortBy(_.filter(getMentors(), function(mentor){
+            return mentor.android > 0;
+        }), function(m){
+            return m.android;
+        });
+
+        mentors.reverse();
+
+        return _.first(mentors, n);
+    }
+
+    function getiOSMentors(n){
+        var mentors = _.sortBy(_.filter(getMentors(), function(mentor){
+            return mentor.ios > 0;
+        }), function(m){
+            return m.ios;
+        });
+
+        mentors.reverse();
+
+        return _.first(mentors, n);
+    }
+
     robot.respond(/ i need help with/i, function(msg){
         console.log(msg.envelope.message.text);
         var messageText = msg.envelope.message.text;
@@ -130,6 +166,19 @@ module.exports = function(robot){
             case 'GO':
             case 'Go':
                 console.log(getGoMentors(4));
+                break;
+            case 'rust':
+            case 'Rust':
+                console.log(getRustMentors(4));
+                break;
+            case 'Android':
+            case 'android':
+                console.log(getAndroidMentors(4));
+                break;
+            case 'ios':
+            case 'iOs':
+            case 'iOS':
+                console.log(getiOSMentors(4));
                 break;
             default:
                 if (subject === 'with'){
