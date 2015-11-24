@@ -20,7 +20,28 @@ module.exports = function(robot){
         return _.first(mentors, n);
     }
 
-    robot.respond(/java mentors/i, function(msg){
-        console.log(getJavaMentors(4))
+    robot.respond(/ i need help with/i, function(msg){
+        console.log(msg.envelope.message.text);
+        var messageText = msg.envelope.message.text;
+        var messageTextArray = messageText.split(' ');
+        var subject = messageTextArray[messageTextArray.length-1];
+        switch (subject) {
+            case 'java':
+                console.log(getJavaMentors(4));
+                break;
+            case 'c':
+                console.log("coming soon");
+                break;
+            default:
+                if (subject === 'with'){
+                    console.log('what do you need?');
+                }else {
+
+                    console.log('we do not have'  + subject);
+                }
+
+                break;
+        }
+        
     });
 }
