@@ -129,11 +129,10 @@ module.exports = function(robot){
         return _.first(mentors, n);
     }
 
-    robot.respond(/ i need help with/i, function(msg){
+    robot.respond(/ i need help with (.*)/i, function(msg){
         console.log(msg.envelope.message.text);
-        var messageText = msg.envelope.message.text;
-        var messageTextArray = messageText.split(' ');
-        var subject = messageTextArray[messageTextArray.length-1];
+        console.log(msg.match[1]);
+        var subject = msg.match[1];
         switch (subject) {
             case 'java':
                 console.log(getJavaMentors(4));
