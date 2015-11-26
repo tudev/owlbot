@@ -38,7 +38,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
 
@@ -51,7 +51,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getCppMentors(n){
