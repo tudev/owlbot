@@ -7,6 +7,15 @@ module.exports = function(robot){
     function getMentors() {
         return robot.brain.get("tudev_mentors") || [];
     }
+    //function to sort json for user id
+    function getUserList(list){
+        var userList = [];
+        _.each(list, function(user){
+                    //console.log(user.id);
+                    userList.push(user.id);
+                });
+        return userList;
+    }
 
     function getJavaMentors(n){
         var mentors = _.sortBy(_.filter(getMentors(), function(mentor){
@@ -17,7 +26,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getPythonMentors(n){
@@ -128,21 +137,37 @@ module.exports = function(robot){
 
         return _.first(mentors, n);
     }
-
+    
+    function printResult(list, msg){
+        console.log("Entering printResults....");
+        _.each(list, function(user){
+            console.log(user);
+            msg.send('<@' + user + '>');
+        });
+    }
+    
     robot.respond(/ i need help with (.*)/i, function(msg){
         console.log(msg.envelope.message.text);
         console.log(msg.match[1]);
         var subject = msg.match[1];
         switch (subject) {
             case 'java':
-                console.log(getJavaMentors(4));
+                var list = getJavaMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'python':
                 console.log(getPythonMentors(4));
+                var list = getPythonMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'c':
             case 'C':
                 console.log(getCMentors(4));
+                var list = getCMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'cpp':
             case 'c++':
