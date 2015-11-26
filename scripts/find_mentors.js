@@ -135,7 +135,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
     
     function printResult(list, msg){
@@ -221,6 +221,9 @@ module.exports = function(robot){
             case 'iOs':
             case 'iOS':
                 console.log(getiOSMentors(4));
+                var list = getiOSMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             default:
                 if (subject === 'with'){
