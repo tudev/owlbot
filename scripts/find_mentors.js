@@ -99,7 +99,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getRustMentors(n){
@@ -111,7 +111,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getAndroidMentors(n){
@@ -123,7 +123,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getiOSMentors(n){
@@ -199,14 +199,23 @@ module.exports = function(robot){
             case 'GO':
             case 'Go':
                 console.log(getGoMentors(4));
+                var list = getGoMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'rust':
             case 'Rust':
                 console.log(getRustMentors(4));
+                var list = getRustMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'Android':
             case 'android':
                 console.log(getAndroidMentors(4));
+                var list = getAndroidMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'ios':
             case 'iOs':
