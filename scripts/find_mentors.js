@@ -63,7 +63,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getFrontEndMentors(n){
@@ -75,7 +75,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getJSMentors(n){
@@ -87,7 +87,7 @@ module.exports = function(robot){
 
         mentors.reverse();
 
-        return _.first(mentors, n);
+        return getUserList( _.first(mentors, n) );
     }
 
     function getGoMentors(n){
@@ -173,6 +173,9 @@ module.exports = function(robot){
             case 'c++':
             case 'C++':
                 console.log(getCppMentors(4));
+                var list = getCppMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'frontend':
             case 'html':
@@ -180,11 +183,17 @@ module.exports = function(robot){
             case 'HTML':
             case 'CSS':
                 console.log(getFrontEndMentors(4));
+                var list = getFrontEndMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'js':
             case 'javascript':
             case 'JS':
                 console.log(getJSMentors(4));
+                var list = getJSMentors(4);
+                msg.send("The follow people know " + subject);
+                printResult(list,msg);
                 break;
             case 'go':
             case 'GO':
