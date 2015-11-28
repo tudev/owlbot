@@ -6,9 +6,12 @@ var scheduler = require('node-schedule');
 var GoogleSpreadsheet = require('google-spreadsheet');
 
 module.exports = function(robot){
-    var survey_results = new GoogleSpreadsheet('');
+    var survey_results = new GoogleSpreadsheet(process.env.GOOGLE_DOCS_SPREADSHEET);
 
-    var creds = {}
+    var creds = {
+        private_key: process.env.GOOGLE_DOCS_PRIVATE_KEY,
+        client_email: process.env.GOOGLE_DOCS_SERVICE_ACCOUNT
+    }
 
 
     function getLast(){
