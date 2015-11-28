@@ -6,6 +6,7 @@
   "description": "Owl doing owl things.",
   "dependencies": {
     "clark": "0.0.6",
+    "google-spreadsheet": "^1.0.1",
     "hubot": "^2.16.0",
     "hubot-help": "^0.1.1",
     "hubot-heroku-keepalive": "^1.0.0",
