@@ -1,92 +1,92 @@
-// // Description
-// //  Scrape gDocs for new results
+// Description
+//  Scrape gDocs for new results
 
-// var _ = require('underscore');
-// var scheduler = require('node-schedule');
-// var GoogleSpreadsheet = require('google-spreadsheet');
+var _ = require('underscore');
+var scheduler = require('node-schedule');
+var GoogleSpreadsheet = require('google-spreadsheet');
 
-// module.exports = function(robot){
-//     var survey_results = new GoogleSpreadsheet(process.env.GOOGLE_DOCS_SPREADSHEET);
+module.exports = function(robot){
+    var survey_results = new GoogleSpreadsheet(process.env.GOOGLE_DOCS_SPREADSHEET);
 
-//     var creds = {
-//         private_key: process.env.GOOGLE_DOCS_PRIVATE_KEY,
-//         client_email: process.env.GOOGLE_DOCS_SERVICE_ACCOUNT
-//     }
+    var creds = {
+        private_key: process.env.GOOGLE_DOCS_PRIVATE_KEY,
+        client_email: process.env.GOOGLE_DOCS_SERVICE_ACCOUNT
+    }
 
 
-//     function getLast(){
-//         return robot.brain.get('last_survey_repsonse') || 0;
-//     }
+    function getLast(){
+        return robot.brain.get('last_survey_repsonse') || 0;
+    }
 
-//     function saveLast(n){
-//         robot.brain.set('last_survey_repsonse', n);
-//     }
+    function saveLast(n){
+        robot.brain.set('last_survey_repsonse', n);
+    }
 
-//     function getMentors() {
-//         return robot.brain.get("tudev_mentors") || [];
-//     }
+    function getMentors() {
+        return robot.brain.get("tudev_mentors") || [];
+    }
 
-//     function addMentor(payload){
-//         var mentors = getMentors();
+    function addMentor(payload){
+        var mentors = getMentors();
 
-//         if(_.isUndefined(_.find(mentors, {id: payload.userid}))){
-//             var mentor = {
-//                 id: payload.userid,
-//                 added: payload.timestamp,
-//                 year: payload.whatyearofcollegeareyouin,
-//                 java: payload.howcomfortableareyouwithjava,
-//                 python: payload.howcomfortableareyouwithpython,
-//                 c: payload.howcomfortableareyouwithc,
-//                 cpp: payload.howcomfortableareyouwithc_2,
-//                 frontend: payload.howcomfortableareyouwithhtmlcss,
-//                 js: payload.howcomfortableareyouwithjavascript,
-//                 go: payload.howcomfortableareyouwithgo,
-//                 rust: payload.howcomfortableareyouwithrust,
-//                 android: payload.howcomfortableareyouwithandroiddevelopment,
-//                 ios: payload.howcomfortableareyouwithiosdevelopment,
-//                 other: payload.whatotherlanguagesdoyouknow
-//             }
+        if(_.isUndefined(_.find(mentors, {id: payload.userid}))){
+            var mentor = {
+                id: payload.userid,
+                added: payload.timestamp,
+                year: payload.whatyearofcollegeareyouin,
+                java: payload.howcomfortableareyouwithjava,
+                python: payload.howcomfortableareyouwithpython,
+                c: payload.howcomfortableareyouwithc,
+                cpp: payload.howcomfortableareyouwithc_2,
+                frontend: payload.howcomfortableareyouwithhtmlcss,
+                js: payload.howcomfortableareyouwithjavascript,
+                go: payload.howcomfortableareyouwithgo,
+                rust: payload.howcomfortableareyouwithrust,
+                android: payload.howcomfortableareyouwithandroiddevelopment,
+                ios: payload.howcomfortableareyouwithiosdevelopment,
+                other: payload.whatotherlanguagesdoyouknow
+            }
 
-//             var sent_users = _.reject(robot.brain.get("sent"), {id: payload.userid})
-//             robot.brain.set("sent", sent_users);
+            var sent_users = _.reject(robot.brain.get("sent"), {id: payload.userid})
+            robot.brain.set("sent", sent_users);
 
-//             mentors.push(mentor);
-//             updateBrain(mentors);
-//         }
-//     }
+            mentors.push(mentor);
+            updateBrain(mentors);
+        }
+    }
 
-//     /** set the welcome_queue */
-//     function updateBrain(mentors){
-//         robot.brain.set('tudev_mentors', mentors)
-//     }
+    /** set the welcome_queue */
+    function updateBrain(mentors){
+        robot.brain.set('tudev_mentors', mentors)
+    }
 
-//     function getUpdates(){
-//         var last = getLast();
+    function getUpdates(){
+        var last = getLast();
 
-//         survey_results.useServiceAccountAuth(creds, function(err){
-//             survey_results.getInfo(function( err, sheet_info ){
-//                 var sheet1 = sheet_info.worksheets[0];
+        survey_results.useServiceAccountAuth(creds, function(err){
+            survey_results.getInfo(function( err, sheet_info ){
+                var sheet1 = sheet_info.worksheets[0];
 
-//                 sheet1.getRows({
-//                     start: last
-//                 }, function(err, rows){
-//                     if(rows.length > 0){
-//                         last += rows.length;
-//                         _.each(rows, function(row){
-//                             if(row.userid)
-//                                 addMentor(row);
-//                         });
+                sheet1.getRows({
+                    start: last
+                }, function(err, rows){
+                    if(rows.length > 0){
+                        last += rows.length;
+                        _.each(rows, function(row){
+                            if(row.userid)
+                                addMentor(row);
+                        });
 
-//                         saveLast(last);
-//                     }
-//                 });
-//             });
-//         });
-//     }
+                        saveLast(last);
+                    }
+                });
+            });
+        });
+    }
 
-//     var rule =  new scheduler.RecurrenceRule();
-//     rule.second = new scheduler.Range(0, 59, 20);
-//     var welcomeSchedule = scheduler.scheduleJob(rule, function() {
-//         getUpdates();
-//     });
-// }
+    var rule =  new scheduler.RecurrenceRule();
+    rule.second = new scheduler.Range(0, 59, 20);
+    var welcomeSchedule = scheduler.scheduleJob(rule, function() {
+        getUpdates();
+    });
+}
