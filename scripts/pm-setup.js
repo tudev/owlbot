@@ -8,7 +8,7 @@ var _ = require('underscore');
 
 module.exports = function(robot){
 
-	var WATCH_ROOMS = ['couch', 'raman'];
+	var WATCH_ROOMS = ['samuelcouch', 'noodle'];
 
 	function getActiveUsers() {
     	return robot.brain.get("active_users") || [];
