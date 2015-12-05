@@ -6,24 +6,20 @@ deployed on [Heroku][heroku] to get you up and running as quick as possible.
 
 ### Running owlbot Locally
 
-You can test your hubot by running the following, however some plugins will not
-behave as expected unless the environment variables they rely
-upon have been set.
+In order to run Owlbot, you will need to set the following environment variables:
+
+| Variable | Purpose|
+|:--------:|:------:|
+|MENTOR_ADMINS| Comma separated list of admins for mentor functions |
+|GOOGLE_DOCS_SPREADSHEET | doc ID for mentor response form |
+|GOOGLE_DOCS_PRIVATE_KEY| Private Key for Google API service account |
+|GOOGLE_DOCS_SERVICE_ACCOUNT| Service account email|
 
 You can start owlbot locally by running:
 
-    % bin/hubot
+    % HUBOT_SLACK_TOKEN=<YOUR-SLACK-TOKEN> ./bin/hubot --adapter slack
 
 You'll see some start up output and a prompt:
 
     [Sat Feb 28 2015 12:38:27 GMT+0000 (GMT)] INFO Using default redis on localhost:6379
     owlbot>
-
-Then you can interact with owlbot by typing `owlbot help`.
-
-    owlbot> owlbot help
-    owlbot animate me <query> - The same thing as `image me`, except adds [snip]
-    owlbot help - Displays all of the help commands that owlbot knows about.
-    ...
-
-More Functionality coming soon...
