@@ -1,4 +1,4 @@
-# owlbot
+# owlbot 😎
 
 ### Prerequisites
 Make sure to install nodejs and redis. Clone the repo and issue the command 'npm i'.
