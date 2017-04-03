@@ -1,3 +1,15 @@
+# Description:
+#	manages groups of users, mostly for pinging purposes
+#
+# Commands:
+#	hubot g:<gname> - prints out group gname
+#	hubot g:<gname> new - creates new group gname
+#	hubot g:<gname> add @<uname> - adds user uname to group gname
+#	hubot g:<gname> rem @<uname> - removes user uname from group gname
+#
+# Author:
+#	shua
+
 
 module.exports = (robot) ->
 
@@ -28,7 +40,7 @@ module.exports = (robot) ->
 		else
 			false
 
-	robot.respond /g:(.*)/i, (res) ->
+	robot.respond /g:([^ ]*)$/i, (res) ->
 		gname = res.match[1]
 		group = getGroup gname
 		if group?
@@ -36,14 +48,20 @@ module.exports = (robot) ->
 		else
 			res.reply "group #{gname} is not in my brain"
 
-	robot.respond /gn:(.*)/i, (res) ->
+	robot.hear /@g:([^ ]*)/i, (res) ->
+		gname = res.match[1]
+		group = getGroup gname
+		if group?
+			res.reply group.map (u) -> u.id
+
+	robot.respond /g:([^ ]*) new$/i, (res) ->
 		gname = res.match[1]
 		group = getGroup gname
 		if not group?
 			setGroup gname, []
 			res.reply "group #{gname} added"
 
-	robot.respond /ga:(.*) (.*)/i, (res) ->
+	robot.respond /g:([^ ]*) add ([^ ]*)$/i, (res) ->
 		gname = res.match[1]
 		uname = res.match[2]
 		if addUser gname, uname
@@ -51,7 +69,7 @@ module.exports = (robot) ->
 		else
 			res.reply "failed to add #{uname} to #{gname}"
 
-	robot.respond /gr:(.*) (.*)/i, (res) ->
+	robot.respond /g:([^ ]*) rem ([^ ]*)$/i, (res) ->
 		gname = res.match[1]
 		uname = res.match[2]
 		if remUser gname, uname
