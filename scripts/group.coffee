@@ -69,7 +69,7 @@ module.exports = (robot) ->
 		else
 			res.reply "failed to add #{uname} to #{gname}"
 
-	robot.respond /g:([^ ]*) rem ([^ ]*)$/i, (res) ->
+	robot.respond /g:([^ ]*) rm ([^ ]*)$/i, (res) ->
 		gname = res.match[1]
 		uname = res.match[2]
 		if remUser gname, uname
